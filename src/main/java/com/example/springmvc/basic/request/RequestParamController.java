@@ -1,8 +1,10 @@
 package com.example.springmvc.basic.request;
 
 
+import com.example.springmvc.basic.HelloData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -74,4 +76,31 @@ public class RequestParamController {
         log.debug("username = {} age = {}" , paramMap.get("username"), paramMap.get("age"));
         return "Ok";
     }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttributeV1(@RequestParam String username , @RequestParam int age){
+        HelloData helloData = new HelloData();
+        helloData.setAge(age);
+        helloData.setUsername(username);
+        log.debug("username = {} , name = {}" ,helloData.getUsername(), helloData.getAge());
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v2")
+    public String modelAttributeV2(@ModelAttribute HelloData helloData){
+        log.debug("username = {} , name = {}" ,helloData.getUsername(), helloData.getAge());
+        return "ok";
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/model-attribute-v3")
+    public String modelAttributeV3(HelloData helloData){
+        log.debug("username = {} , name = {}" ,helloData.getUsername(), helloData.getAge());
+        return "ok";
+    }
+
+
 }
