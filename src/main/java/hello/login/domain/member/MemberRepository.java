@@ -30,12 +30,11 @@ public class MemberRepository {
     }
 
     public Optional<Member> findByLoginId(String loginId){
-        List<Member> all = findAll();
-        for (Member member : all) {
-            if(member.getLoginId().equals(loginId)){
-                return Optional.of(member);
-            }
-        }
-        return Optional.empty();
+
+        return findAll().stream().filter(m->m.getLoginId().equals(loginId)).findAny();
+    }
+
+    public void clearStore(){
+        store.clear();
     }
 }

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 public class Member {
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "please write")
     private String loginId;
     @NotEmpty
     private String name;
