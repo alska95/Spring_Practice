@@ -2,16 +2,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id = "memberService" class="com.example.may_seventh.member.MemberServiceImpl">
+    <bean id = "memberService" class="com.example.springbasic.member.MemberServiceImpl">
         <constructor-arg name = "memberRepository" ref = "memberRepository"/>
     </bean>
 
-    <bean id = "memberRepository" class="com.example.may_seventh.member.MemoryMemberRepository"/>
+    <bean id = "memberRepository" class="com.example.springbasic.member.MemoryMemberRepository"/>
 
-    <bean id = "orderService" class="com.example.may_seventh.order.OrderServiceImpl">
+    <bean id = "orderService" class="com.example.springbasic.order.OrderServiceImpl">
         <constructor-arg name="memberRepository" ref="memberRepository"/>
         <constructor-arg name="discountPolicy" ref="discountPolicy"/>
     </bean>
 
-    <bean id = "discountPolicy" class="com.example.may_seventh.discount.RateDiscountPolicy"/>
+    <bean id = "discountPolicy" class="com.example.springbasic.discount.RateDiscountPolicy"/>
 </beans>
