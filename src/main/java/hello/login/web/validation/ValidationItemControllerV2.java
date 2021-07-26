@@ -179,6 +179,12 @@ public class ValidationItemControllerV2 {
             log.info("error = {}" , bindingResult);
             return "validation/v2/addForm";
         }
+        /**
+        * 실행 개요
+         * 1.rejectValue() 호출
+         * 2.MessageCodesResolver을 사용해서 검증 오류 코드로 메시지 코드들을 생성
+         * 3.new FieldError()를 생성하면서 메시지 코드들을 보관
+         * "th:errors"에서 메시지 코드들로 메시지를 순서대로 메시지에서 찾고, 노출*/
 
         //성공 로직
         Item savedItem = itemRepository.save(item);
