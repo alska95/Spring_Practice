@@ -180,7 +180,7 @@ public class ValidationItemControllerV2 {
             return "validation/v2/addForm";
         }
 
-        //성종 로직
+        //성공 로직
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
