@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,6 +29,13 @@ public class ValidationItemControllerV2 {
 
     private final ItemRepository itemRepository;
     private final ItemValidator itemValidator;
+
+    @InitBinder
+    public void init(WebDataBinder dataBinder){
+        dataBinder.addValidators(itemValidator);
+    }
+    /**
+     * dataBinder에 itemValidator 추가하면 검증기 자동 사용 가능*/
 
     @GetMapping
     public String items(Model model) {
@@ -173,7 +182,7 @@ public class ValidationItemControllerV2 {
     }
 
     /***********************************************/
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String addItemV5(@ModelAttribute Item item, BindingResult bindingResult , RedirectAttributes redirectAttributes, Model model) {
 
         log.info("objectName = {}" , bindingResult.getObjectName());
@@ -181,6 +190,36 @@ public class ValidationItemControllerV2 {
 
         //검증 오류 결과를 보관
         itemValidator.validate(item , bindingResult);
+
+        //검증에 실패하면 다시 입력 폼으로
+        if(bindingResult.hasErrors()){
+            log.info("error = {}" , bindingResult);
+            return "validation/v2/addForm";
+        }
+        /**
+         * 실행 개요
+         * 1.rejectValue() 호출
+         * 2.MessageCodesResolver을 사용해서 검증 오류 코드로 메시지 코드들을 생성
+         * 3.new FieldError()를 생성하면서 메시지 코드들을 보관
+         * "th:errors"에서 메시지 코드들로 메시지를 순서대로 메시지에서 찾고, 노출*/
+
+        //성공 로직
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/validation/v2/items/{itemId}";
+    }
+
+    /***********************************************/
+    @PostMapping("/add")
+    public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bindingResult , RedirectAttributes redirectAttributes, Model model) {
+
+        log.info("objectName = {}" , bindingResult.getObjectName());
+        log.info("target ={}" , bindingResult.getTarget());
+        /**
+         * 등록된 검증기 하나하나 뒤지고 support되는거 있으면 자동 사용*/
+        //검증 오류 결과를 보관
+//       @validated가 이거 대신 해준다. itemValidator.validate(item , bindingResult);
 
         //검증에 실패하면 다시 입력 폼으로
         if(bindingResult.hasErrors()){
