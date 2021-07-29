@@ -2,6 +2,7 @@ package hello.login.web;
 
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository;
+import hello.login.web.argumentresolver.Login;
 import hello.login.web.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -51,14 +53,19 @@ public class HomeController {
 //        model.addAttribute("member" , session);
 //        return "loginHome";
 //    }
-    @GetMapping("/")
-    public String homeLoginV3(HttpServletRequest request, Model model){
-        HttpSession session1 = request.getSession(false);
-        if(session1 == null){
+//    @GetMapping("/")
+    public String homeLoginV3(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember , Model model){
+        if(loginMember == null){
             return "home";
         }
-        Member loginMember = (Member) session1.getAttribute(SessionConst.LOGIN_MEMBER);
+
         model.addAttribute("member" , loginMember);
         return "loginHome";
+    }
+
+    @GetMapping("/")
+    public String homeLoginV4ArgumentResolver(@Login Member loginMember, Model model){
+
+        return "";
     }
 }
