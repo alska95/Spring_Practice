@@ -1,5 +1,6 @@
 package hello.itemservice.message;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +20,7 @@ public class MessageSourceTest {
     @Test
     void helloMessage() {
         String result = ms.getMessage("hello", null, null);
-        assertThat(result).isEqualTo("안녕");
+        Assertions.assertThat(result).isEqualTo("안녕");
     }
 
     @Test
