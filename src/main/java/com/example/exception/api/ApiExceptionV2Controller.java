@@ -15,12 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 public class ApiExceptionV2Controller {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST) //걍 컨트롤러에 붙이는거랑 같음 - 정상응답이기때문에 사용 가능한것!
-    @ExceptionHandler(Exception.class)
-    public ErrorResult illegalExHandler(Exception e){
-        log.error("[exceptionHandler] ex" ,e);
-        return new ErrorResult("ex" , e.getMessage());
-    }
 
     @GetMapping("/api2/members/{id}")
     public MemberDto getMember(@PathVariable("id") String id){
