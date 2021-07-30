@@ -30,6 +30,7 @@ public class ConverterController {
     public String converterEdit(@ModelAttribute Form form , Model model){
         IpPort ipPort = form.getIpPort();
         model.addAttribute("ipPort" , ipPort);
+        model.addAttribute("number" , 100000000);
         return "converter-view";
     }
 
