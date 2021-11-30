@@ -1,4 +1,4 @@
-package com.example.advanced.v0;
+package com.example.advanced.trace.app.v0;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
