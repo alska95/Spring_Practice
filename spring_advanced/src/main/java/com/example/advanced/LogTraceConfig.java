@@ -8,8 +8,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LogTraceConfig {
 
+//    @Bean
+//    public LogTrace logTrace() {
+//        return new FieldLogTrace();
+//    }
+
     @Bean
-    public LogTrace logTrace() {
+    public LogTrace logTrace(){
         return new FieldLogTrace();
     }
 }
