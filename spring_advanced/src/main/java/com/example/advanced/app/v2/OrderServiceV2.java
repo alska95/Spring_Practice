@@ -1,4 +1,4 @@
-package com.example.advanced.trace.app.v2;
+package com.example.advanced.app.v2;
 
 import com.example.advanced.trace.TraceId;
 import com.example.advanced.trace.TraceStatus;
