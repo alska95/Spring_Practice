@@ -1,5 +1,8 @@
 package hello.proxy.app.v1;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class OrderServiceV1Impl implements OrderServiceV1 {
 
     private final OrderRepositoryV1 orderRepository;

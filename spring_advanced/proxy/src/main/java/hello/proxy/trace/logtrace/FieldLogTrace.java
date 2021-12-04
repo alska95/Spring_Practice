@@ -3,6 +3,7 @@ package hello.proxy.trace.logtrace;
 import hello.proxy.trace.TraceId;
 import hello.proxy.trace.TraceStatus;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
 public class FieldLogTrace implements LogTrace {
@@ -18,7 +19,7 @@ public class FieldLogTrace implements LogTrace {
         syncTraceId();
         TraceId traceId = traceIdHolder;
         Long startTimeMs = System.currentTimeMillis();
-        log.info("[{}] {}{}", traceId.getId(), addSpace(START_PREFIX, traceId.getLevel()), message);
+        log.info("Field [{}] {}{}", traceId.getId(), addSpace(START_PREFIX, traceId.getLevel()), message);
 
         return new TraceStatus(traceId, startTimeMs, message);
     }
