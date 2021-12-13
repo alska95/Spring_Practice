@@ -34,15 +34,12 @@ public class ProxyApplication {
 	}
 
 	@Bean
-	public LogTrace logTrace2(){
+	public LogTrace logTrace(){
 		return new ThreadLocalLogTrace();
 	}
 	@Bean
-	public LogTrace logTrace(){
+	public LogTrace logTrace2(){
 		return new FieldLogTrace();
 	}
-
-
-
 
 }
