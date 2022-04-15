@@ -1,6 +1,8 @@
 package com.example.jdbc.connection;
 
+import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
+import org.h2.engine.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -36,5 +38,23 @@ public class ConnectionTest {
 
         log.info("connection = {}, class = {}", con1, con1.getClass());
         log.info("connection = {}, class = {}", con2, con2.getClass());
+    }
+
+    @Test
+    void dataSourceConnectionPool() throws SQLException, InterruptedException {
+        //커넥션 풀링
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setJdbcUrl(URL);
+        dataSource.setUsername(USERNAME);
+        dataSource.setPassword(PASSWORD);
+        dataSource.setMaximumPoolSize(10);
+        dataSource.setPoolName("MyPool");
+
+        useDataSource(dataSource);
+        Thread.sleep(1000);
+        /*
+        * 커넥션 풀에서 커넥션을 생성하는 작업은 어플리케이션 실행 속도에 영향을 주지 않기 위해 별도의 쓰레드에서 작동한다.
+        * 별도의 쓰레드에서 돌아가기 때문에 테스트가 먼저 종료됨.
+         * */
     }
 }
