@@ -3,6 +3,7 @@ package com.example.jdbc.service;
 import com.example.jdbc.domain.Member;
 import com.example.jdbc.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
