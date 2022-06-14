@@ -2,6 +2,7 @@ package hello.springtx.propagation;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -100,5 +101,39 @@ public class BasicTxTest {
         txManager.commit(outer);
     }
 
+    @Test
+    void outer_rollback() {
+
+        log.info("외부 트랜잭션 시작");
+        TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("outer.isNewTransaction()={}", outer.isNewTransaction());
+
+        log.info("내부 트랜잭션 시작");
+        TransactionStatus inner = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("내부 트랜잭션 커밋");
+        txManager.commit(inner);
+
+        log.info("외부 트랜잭션 롤백");
+        txManager.rollback(outer); //외부 롤백하면 내부도 같이 롤백.
+    }
+
+    @Test
+    void inner_rollback() {
+
+        log.info("외부 트랜잭션 시작");
+        TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("outer.isNewTransaction()={}", outer.isNewTransaction());
+
+        log.info("내부 트랜잭션 시작");
+        TransactionStatus inner = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("내부 트랜잭션 롤백");
+        txManager.rollback(inner); //marking existing transaction as rollback only --> 신규 트랜잭션이 아니기 때문에 직접 롤백할 수는 없다.
+        //트랜잭션 동기화 매니져에 rollbackonly= true표시한다.
+
+        log.info("외부 트랜잭션 롤백");
+        txManager.commit(outer); //global transaction is marked as rollback-only but commit --> 롤백 해버린다.
+        //실제로 커밋을 시도했지만 롤백이 된 사례기 때문에 반드시 알려줘야한다.
+        //이때 UnexpectedCommitRollback예외가 발생한다.
+    }
 
 }
