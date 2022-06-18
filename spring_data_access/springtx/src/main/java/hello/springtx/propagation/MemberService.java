@@ -21,12 +21,7 @@ public class MemberService {
         log.info("== memberRepository 호출 종료 ==");
 
         log.info("== logRepository 호출 시작 ==");
-        try {
-            logRepository.save(logMessage);
-        }catch (RuntimeException e){
-            log.info("log 저장에 실패했습니다. logMessage={}", logMessage.getMessage());
-            log.info("정상 흐름 반환");
-        }
+        logRepository.save(logMessage);
         log.info("== logRepository 호출 종료 ==");
     }
 }
