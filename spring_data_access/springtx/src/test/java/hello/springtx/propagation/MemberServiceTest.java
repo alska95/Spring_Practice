@@ -51,4 +51,21 @@ class MemberServiceTest {
         Assertions.assertTrue(memberRepository.find(username).isPresent()); //member 정상 커밋
         Assertions.assertTrue(logRepository.find(username).isEmpty()); //log는 롤백
     }
+
+    /**
+     * memberService    @Transactional : on
+     * memberRepository @Transactional : off
+     * logRepository    @Transactional : off
+     * */
+    @Test
+    void singleTx(){
+
+        String username = "outerTxOff_success";
+
+        memberService.joinV1(username);
+
+        Assertions.assertTrue(memberRepository.find(username).isPresent());
+        Assertions.assertTrue(logRepository.find(username).isPresent());
+    }
+
 }
