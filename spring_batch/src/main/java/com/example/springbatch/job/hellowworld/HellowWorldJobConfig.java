@@ -1,4 +1,4 @@
-package com.example.springbatch.job;
+package com.example.springbatch.job.hellowworld;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+
 @RequiredArgsConstructor
 public class HellowWorldJobConfig {
 
@@ -24,7 +24,7 @@ public class HellowWorldJobConfig {
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
 
-    @Bean
+//    @Bean
     public Job helloWorldJob() {
         return jobBuilderFactory.get("hellowWorldJob")
                 .incrementer(new RunIdIncrementer())
@@ -32,7 +32,7 @@ public class HellowWorldJobConfig {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public Step hellowWorldStep() {
         return stepBuilderFactory.get("hellwWorldStep")
                 .tasklet(hellowWorldTasklet())
@@ -40,7 +40,7 @@ public class HellowWorldJobConfig {
     }
 
     @StepScope
-    @Bean
+//    @Bean
     public Tasklet hellowWorldTasklet() {
         return new Tasklet() {
             @Override
